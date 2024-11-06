@@ -1,0 +1,18 @@
+fn gen_shipments(n: usize) -> Vec<u32> {
+    let num_ships = 32;  // Кількість кораблів
+    let base_shipment = n as u32 / num_ships as u32;  // Скільки вантажу буде на кожному кораблі
+    let mut shipments = vec![base_shipment; num_ships];  // Заповнюємо вектор рівними значеннями
+
+    // Додаємо залишок до перших кількох кораблів
+    for i in 0..(n as u32 % num_ships as u32) {
+        shipments[i as usize] += 1;
+    }
+
+    shipments
+}
+
+fn main() {
+    let n = 320;  // Загальна кількість вантажу
+    let shipments = gen_shipments(n);
+    println!("{:?}", shipments);  // Виведення згенерованого вектора вантажів
+}
