@@ -1,0 +1,31 @@
+fn count_permutation(shipments: &Vec<u32>) -> usize {
+    let total_shipment: u32 = shipments.iter().sum();
+    let num_ships = shipments.len();
+
+    // Перевірка на можливість рівномірного розподілу
+    if total_shipment % num_ships as u32 != 0 {
+        return usize::MAX; // Якщо неможливо рівномірно розподілити вантаж, повертаємо максимальне значення
+    }
+
+    let target = total_shipment / num_ships as u32;  // Скільки має бути вантажу на кожному кораблі
+    let mut transfers = 0;
+    let mut balance = 0;
+
+    // Проходимо по всіх кораблях і підраховуємо мінімальну кількість переміщень
+    for &shipment in shipments.iter() {
+        balance += shipment as i32 - target as i32;
+        transfers += balance.abs() as usize;  // Додаємо кількість переміщених вантажів
+    }
+
+    transfers
+}
+
+fn main() {
+    let shipments = vec![10, 20, 30, 40]; // Приклад вектору вантажу
+    let result = count_permutation(&shipments);
+    if result == usize::MAX {
+        println!("Неможливо рівномірно розподілити вантаж");
+    } else {
+        println!("Мінімальна кількість переносу вантажу: {}", result);
+    }
+}
